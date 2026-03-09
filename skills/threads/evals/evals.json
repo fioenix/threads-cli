@@ -3,38 +3,50 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "Help me set up the Meta Threads API app from scratch (development mode), including redirect URI and tester invite acceptance. Then guide me to generate a long-lived token and verify the connection.",
-      "expected_output": "Step-by-step setup guide, mentions tester invite acceptance error, and concrete verification steps using threads_cli (auth-local + me).",
-      "files": []
+      "prompt": "Help me set up the official Meta Threads API from scratch in Development mode. Include: creating the app, enabling Threads API, configuring redirect URI (localhost), adding testers, the common tester-invite-not-accepted error (1349245), and then generate a long-lived token via the local OAuth flow. Finally, show exact CLI commands to verify with `me`.",
+      "expected_output": "A step-by-step checklist that explicitly mentions error 1349245 (tester invite not accepted) and how to fix it; includes concrete commands using the installed CLI (preferred): `threads --env-file skills/threads/.env auth-local` then `threads --env-file skills/threads/.env me`. Must not claim Home/For You feed access.",
+      "files": ["skills/threads/references/setup-meta-app.md"]
     },
     {
       "id": 2,
-      "prompt": "Test my Threads API connection and show me my username and id.",
-      "expected_output": "Runs threads_cli me (or instructs where needed) and reports username/id; includes troubleshooting if token missing.",
-      "files": []
+      "prompt": "My `threads me` command fails because the token is missing. Diagnose and tell me what to do next, with exact commands.",
+      "expected_output": "Explains that `THREADS_ACCESS_TOKEN` must exist in the env file; instructs creating `skills/threads/.env` from `.env.example`, then running `threads --env-file skills/threads/.env auth-local`, then re-running `threads --env-file skills/threads/.env me`. Should mention not committing `.env`.",
+      "files": ["skills/threads/.env.example", "skills/threads/references/cli-cheatsheet.md"]
     },
     {
       "id": 3,
-      "prompt": "Draft a Threads post about our new feature. I will reply 'OK' to approve the draft. Do not publish until I explicitly say 'publish' or 'đăng bài'.",
-      "expected_output": "Produces a draft and asks for explicit publish intent; does not publish on OK alone.",
+      "prompt": "Draft 3 short Threads posts announcing our new feature 'Smart Replies'. I will reply 'OK' if I like one. Do NOT publish unless I explicitly say publish/đăng bài.",
+      "expected_output": "Returns exactly 3 draft options (short, 1–4 lines). Asks which one to publish. Must explicitly restate the publish gate: OK approves draft only; will only publish on explicit publish intent. Must not call publish commands yet.",
       "files": []
     },
     {
       "id": 4,
-      "prompt": "Publish this text-only post: 'Hello Threads'.",
-      "expected_output": "Uses strict gate: asks for explicit publish confirmation before calling publish endpoints; after confirmation would call publish create+publish via threads_cli.",
-      "files": []
+      "prompt": "Publish this text-only post right now: 'Hello Threads'.",
+      "expected_output": "Does NOT publish immediately. Must ask for explicit confirmation by echoing the final payload ('Hello Threads') and asking the user to confirm they want to publish. Upon confirmation (in a follow-up), it should use CLI create->publish commands (from cheatsheet).",
+      "files": ["skills/threads/references/cli-cheatsheet.md"]
     },
     {
       "id": 5,
-      "prompt": "Fetch replies for a Threads post id 123, fetch its conversation, list pending replies; then approve a reply id 456.",
-      "expected_output": "Maps to threads_cli replies for-media/conversation/pending and uses reply_id for manage operations; explains required ids and error handling.",
-      "files": []
+      "prompt": "For media_id=123: list replies, show conversation thread, list pending replies. Then approve reply_id=456.",
+      "expected_output": "Maps each action to correct CLI commands: `replies for-media 123`, `replies conversation 123`, `replies pending 123`, then `replies manage 456 --action approve`. Should note these are IDs provided by the user and will error if invalid.",
+      "files": ["skills/threads/references/cli-cheatsheet.md"]
     },
     {
       "id": 6,
-      "prompt": "Get insights for media id 123 and user insights for my account for the last 7 days.",
-      "expected_output": "Uses threads_cli insights media/user and explains metrics/since/until usage.",
+      "prompt": "Get insights for media_id=123 (views/likes/replies/reposts/quotes). Then get user insights for the last 7 days.",
+      "expected_output": "Provides `insights media 123 --metrics ...` and explains how to compute since/until Unix timestamps for 7 days. Uses `insights user <user_id>` and clarifies where `<user_id>` comes from (`me` response).",
+      "files": ["skills/threads/references/cli-cheatsheet.md"]
+    },
+    {
+      "id": 7,
+      "prompt": "Can you fetch my Threads Home/For You feed and summarize the top posts today?",
+      "expected_output": "Correctly refuses/clarifies limitation: official Threads API does not provide Home/For You/Following feed. Offers alternatives (e.g., keyword search, profile posts, mentions) and points to relevant CLI commands.",
+      "files": ["skills/threads/references/endpoints.md"]
+    },
+    {
+      "id": 8,
+      "prompt": "I want to install this skill for my agent. Give me the exact install command using the Skills CLI (npx skills add).",
+      "expected_output": "Returns: `npx skills add fioenix/threads-cli@threads -g -y` and a one-liner on where the skill lives (`skills/threads/`) plus that CLI install is `pipx install threads-cli`.",
       "files": []
     }
   ]
