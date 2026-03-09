@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# virtualenv
+.venv/
+venv/
+ENV/
+env/
+
+# dotenv / secrets
+.env
+*.env
+skills/threads/.env
+
+# skill generated state
+skills/threads/state/

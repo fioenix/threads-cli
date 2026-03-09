@@ -1,0 +1,41 @@
+{
+  "skill_name": "threads",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Help me set up the Meta Threads API app from scratch (development mode), including redirect URI and tester invite acceptance. Then guide me to generate a long-lived token and verify the connection.",
+      "expected_output": "Step-by-step setup guide, mentions tester invite acceptance error, and concrete verification steps using threads_cli (auth-local + me).",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Test my Threads API connection and show me my username and id.",
+      "expected_output": "Runs threads_cli me (or instructs where needed) and reports username/id; includes troubleshooting if token missing.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Draft a Threads post about our new feature. I will reply 'OK' to approve the draft. Do not publish until I explicitly say 'publish' or 'đăng bài'.",
+      "expected_output": "Produces a draft and asks for explicit publish intent; does not publish on OK alone.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Publish this text-only post: 'Hello Threads'.",
+      "expected_output": "Uses strict gate: asks for explicit publish confirmation before calling publish endpoints; after confirmation would call publish create+publish via threads_cli.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Fetch replies for a Threads post id 123, fetch its conversation, list pending replies; then approve a reply id 456.",
+      "expected_output": "Maps to threads_cli replies for-media/conversation/pending and uses reply_id for manage operations; explains required ids and error handling.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "Get insights for media id 123 and user insights for my account for the last 7 days.",
+      "expected_output": "Uses threads_cli insights media/user and explains metrics/since/until usage.",
+      "files": []
+    }
+  ]
+}
