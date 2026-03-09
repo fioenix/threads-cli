@@ -15,7 +15,7 @@ It assumes you will use the `threads` CLI from this repo (installable via `pipx`
 
 ```bash
 pipx install threads-cli
-cp skills/threads/.env.example skills/threads/.env
+cp examples/threads/env.example skills/threads/.env
 threads --env-file skills/threads/.env me
 ```
 
