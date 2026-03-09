@@ -38,20 +38,24 @@ pip install -e .
 
 ---
 
-## Files & locations
+## Files & locations (agent-agnostic)
 
-- Skill root: `~/.openclaw/workspace/skills/threads/`
-- Config env file (secrets): `~/.openclaw/workspace/skills/threads/.env`
+This skill is designed to work with **any agent runtime** (OpenClaw, Claude Code, etc.).
+
+- Skill folder (in this repo): `skills/threads/`
+- Env file (secrets): `skills/threads/.env` (create locally; do **not** commit)
 
 CLI is invoked as:
 
 ```bash
 # Using installed CLI
-threads --env-file ~/.openclaw/workspace/skills/threads/.env <command>
+threads --env-file skills/threads/.env <command>
 
 # Or from source
-python -m threads_cli --env-file ~/.openclaw/workspace/skills/threads/.env <command>
+python -m threads_cli --env-file skills/threads/.env <command>
 ```
+
+If your agent runs in a different working directory, pass absolute paths to `--env-file`.
 
 ---
 
